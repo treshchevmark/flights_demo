@@ -31,7 +31,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 on-run-start:
    - create table if not exists shd.dbt_logs (dbt_id int, start_time timestamp, end_time timestamp, dbt_duration_sec int, is_finish int)
-   - insert into shd.dbt_logs values ((select coalesce(max(dbt_id)+1,1) from shd.dbt_logs),'{{run_started_at.strftime("%y-%m-%d %H:%M:%S")}}',null,null,0)
+   - insert into shd.dbt_logs values ((select coalesce(max(dbt_id)+1,1) from shd.dbt_logs),'{{run_started_at.strftime("%Y-%m-%d %H:%M:%S")}}',null,null,0)
 
 #on_run_end:
    #- update shd.dbt_logs set end_time = now()::timestamp ,dbt_duration_sec = '{{run_started_at.strftime("%y-%m-%d %H:%M:%S")}}' - now()::timestamp where dbt_id = ((select max(dbt_id) from shd.dbt_logs) + 1)

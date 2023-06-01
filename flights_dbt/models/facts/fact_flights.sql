@@ -16,8 +16,8 @@ select f.flight_id
 		  ,f.aircraft_code
 		  ,f.actual_departure
 		  ,f.actual_arrival
-		  ,round(extract(epoch from f.actual_arrival - f.actual_departure)/(60*60),2) as flight_duration
-		  ,round(extract(epoch from f.scheduled_arrival - f.scheduled_departure)/(60*60),2) as flight_hours_expected
+		  ,round((extract(epoch from f.actual_arrival - f.actual_departure)/(60*60))::numeric,2) as flight_duration
+		  ,round((extract(epoch from f.scheduled_arrival - f.scheduled_departure)/(60*60))::numeric,2) as flight_hours_expected
 		  ,case when actual_departure is null then null else (case when (extract(epoch from f.scheduled_arrival - f.scheduled_departure)/(60*60)-extract(epoch from f.actual_arrival - f.actual_departure)/(60*60)) = 0 then 'As Expected'
 		        												 when (extract(epoch from f.scheduled_arrival - f.scheduled_departure)/(60*60)-extract(epoch from f.actual_arrival - f.actual_departure)/(60*60)) > 0 then 'Shorter'
 		        												 else 'Longer' end)

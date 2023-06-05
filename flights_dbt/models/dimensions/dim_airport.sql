@@ -1,4 +1,4 @@
-{{ config(pre_hook="create table if not exists airport_log (dbt_id int,is_start_run int, is_finish int);insert into airport_log values({{var('dbt_id')}}::int,1,0)",post_hook="update airport_log set is_finish=1 where dbt_id={{var('dbt_id')}}" )}}
+{{ config(pre_hook="create table if not exists airport_log (dbt_id int,is_start_run int, is_finish int);insert into airport_log values({{var('dbt_id')}}::int,1,0)",post_hook=["update airport_log set is_finish=1 where dbt_id={{var('dbt_id')}}","insert into {{this}} select '-1','na','na','na','na',null,'na',null,null"] )}}
 
 with airports_data as(
   select a.*

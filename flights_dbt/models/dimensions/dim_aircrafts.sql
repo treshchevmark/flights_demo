@@ -1,3 +1,5 @@
+{{config(post_hook="insert into {{this}} select -1, 'na','na', null,'na','na','na',null")}}
+
 with aircrafts_data as(
   select a.*
         ,'{{run_started_at.strftime("%y-%m-%d %H:%M:%S")}}' as dbt_run_time
@@ -7,7 +9,6 @@ with aircrafts_data as(
   select *
   from {{source('stg','seats')}}
 )
-
 select ad.aircraft_code
       ,replace((ad.model -> 'en')::varchar,'"','') as model_english
       ,replace((ad.model -> 'ru')::varchar,'"','') as model_russian
